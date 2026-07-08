@@ -4,4 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "${HOST_PORT:-8080}:80"
+      - "${HOST_SSL_PORT:-8443}:443"
+    volumes:
+      - ${SSL_CERT_PATH:?SSL_CERT_PATH not set}:/etc/nginx/ssl/cert.pem:ro
+      - ${SSL_KEY_PATH:?SSL_KEY_PATH not set}:/etc/nginx/ssl/key.pem:ro
